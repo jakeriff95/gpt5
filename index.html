@@ -6,7 +6,21 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div id="score">Distance: 0</div>
   <canvas id="gameCanvas" width="400" height="600"></canvas>
+
+  <div id="startScreen" class="overlay">
+    <h1>Driving Game</h1>
+    <p>Use ←/→ or A/D to steer.<br />
+       Up/W to speed up, Down/S to slow down.</p>
+    <button id="startBtn">Start</button>
+  </div>
+
+  <div id="gameOverScreen" class="overlay" style="display:none;">
+    <h1>Game Over</h1>
+    <button id="restartBtn">Restart</button>
+  </div>
+
   <script src="game.js"></script>
 </body>
 </html>
