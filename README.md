@@ -16,7 +16,7 @@ Open `index.html` in a browser to play.
 
 Click **Start** to begin. Dodge the black obstacles on the road as long as you can. Your distance travelled appears in the top-left corner. When you crash, a **Game Over** screen lets you restart without refreshing the page.
 
-Engine noise plays while driving and a short tone sounds on impact.
+A quiet looping chiptune plays in the background while a short tone sounds on impact.
 
 ### Implementation Notes
 

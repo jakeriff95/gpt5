@@ -41,23 +41,34 @@ let sceneryOffset = 0;
 
 // Audio
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-let engineOscillator;
+let musicOscillator;
+let musicInterval;
+const melody = [261.63, 329.63, 392.0, 523.25]; // simple loop
 
-function startEngine() {
-  engineOscillator = audioCtx.createOscillator();
+function startMusic() {
+  musicOscillator = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
-  engineOscillator.type = 'sawtooth';
-  engineOscillator.frequency.value = 60;
-  gain.gain.value = 0.05;
-  engineOscillator.connect(gain).connect(audioCtx.destination);
-  engineOscillator.start();
+  musicOscillator.type = 'square';
+  musicOscillator.frequency.value = melody[0];
+  gain.gain.value = 0.02;
+  musicOscillator.connect(gain).connect(audioCtx.destination);
+  musicOscillator.start();
+  let index = 0;
+  musicInterval = setInterval(() => {
+    index = (index + 1) % melody.length;
+    musicOscillator.frequency.setValueAtTime(melody[index], audioCtx.currentTime);
+  }, 200);
 }
 
-function stopEngine() {
-  if (engineOscillator) {
-    engineOscillator.stop();
-    engineOscillator.disconnect();
-    engineOscillator = null;
+function stopMusic() {
+  if (musicOscillator) {
+    musicOscillator.stop();
+    musicOscillator.disconnect();
+    musicOscillator = null;
+  }
+  if (musicInterval) {
+    clearInterval(musicInterval);
+    musicInterval = null;
   }
 }
 
@@ -111,7 +122,7 @@ function update(delta) {
     if (o.x < car.x + car.width && o.x + o.width > car.x &&
         o.y < car.y + car.height && o.y + o.height > car.y) {
       running = false;
-      stopEngine();
+      stopMusic();
       playCrash();
       gameOverScreen.style.display = 'flex';
     }
@@ -173,7 +184,7 @@ function gameLoop(timestamp) {
 startBtn.addEventListener('click', () => {
   startScreen.style.display = 'none';
   audioCtx.resume();
-  startEngine();
+  startMusic();
   running = true;
   reset();
   requestAnimationFrame(gameLoop);
@@ -182,7 +193,7 @@ startBtn.addEventListener('click', () => {
 restartBtn.addEventListener('click', () => {
   gameOverScreen.style.display = 'none';
   audioCtx.resume();
-  startEngine();
+  startMusic();
   running = true;
   reset();
   requestAnimationFrame(gameLoop);
