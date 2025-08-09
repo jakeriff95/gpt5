@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Driving Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="score">Distance: 0</div>
+  <canvas id="gameCanvas" width="400" height="600"></canvas>
+
+  <div id="startScreen" class="overlay">
+    <h1>Driving Game</h1>
+    <p>Use ←/→ or A/D to steer.<br />
+       Up/W to speed up, Down/S to slow down.</p>
+    <button id="startBtn">Start</button>
+    <button id="settingsBtn">Settings</button>
+  </div>
+
+  <div id="gameOverScreen" class="overlay" style="display:none;">
+    <h1>Game Over</h1>
+    <button id="restartBtn">Restart</button>
+    <button id="settingsBtn2">Settings</button>
+  </div>
+
+  <div id="settingsScreen" class="overlay" style="display:none;">
+    <h1>Settings</h1>
+    <label>Music Volume
+      <input type="range" id="volumeSlider" min="0" max="100" value="5" />
+    </label>
+    <button id="closeSettingsBtn">Close</button>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
