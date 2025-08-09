@@ -10,8 +10,15 @@ const car = {
 };
 
 const keys = {};
-document.addEventListener('keydown', e => keys[e.key] = true);
-document.addEventListener('keyup', e => keys[e.key] = false);
+function handleKey(e, isDown) {
+  const key = e.key.toLowerCase();
+  if (['arrowleft', 'arrowright', 'a', 'd'].includes(key)) {
+    e.preventDefault();
+    keys[key] = isDown;
+  }
+}
+document.addEventListener('keydown', e => handleKey(e, true));
+document.addEventListener('keyup', e => handleKey(e, false));
 
 function createObstacle() {
   const width = 40 + Math.random() * 40;
@@ -23,8 +30,8 @@ let obstacles = [];
 let lastSpawn = 0;
 
 function update(delta) {
-  if (keys['ArrowLeft']) car.x -= car.speed;
-  if (keys['ArrowRight']) car.x += car.speed;
+  if (keys['arrowleft'] || keys['a']) car.x -= car.speed;
+  if (keys['arrowright'] || keys['d']) car.x += car.speed;
   car.x = Math.max(0, Math.min(canvas.width - car.width, car.x));
 
   obstacles.forEach(o => o.y += o.speed);
